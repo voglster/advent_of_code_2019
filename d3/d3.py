@@ -58,3 +58,31 @@ for line1, line2 in product(pairs1, pairs2):
         min_dist = min(new_dist, min_dist)
 
 print(min_dist)
+
+
+def length(pair):
+    (x0, y0), (x1, y1) = pair
+    return abs(x0 - x1) + abs(y0 - y1)
+
+
+def coord_pairs_with_dist(line):
+    dist = 0
+    for pair in convert_to_coord_pairs(line):
+        yield pair, dist
+        dist += length(pair)
+
+
+min_dist = 100000000000
+
+pairs1 = list(coord_pairs_with_dist(data[0]))
+pairs2 = list(coord_pairs_with_dist(data[1]))
+
+for (line1, dist1), (line2, dist2) in product(pairs1, pairs2):
+    x = find_cross(line1, line2)
+    if x:
+        first_dist = dist1 + length((line1[0], x))
+        second_dist = dist2 + length((line2[0], x))
+        new_dist = first_dist + second_dist
+        min_dist = min(new_dist, min_dist)
+
+print(min_dist)
