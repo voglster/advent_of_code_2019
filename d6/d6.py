@@ -13,28 +13,28 @@ with open("input_p1") as f:
 # D)I
 # E)J
 # J)K
-# K)L"""
+# K)L
+# K)YOU
+# I)SAN"""
 
 data = data.splitlines()
 data = [d.strip() for d in data]
 
-g = nx.DiGraph()
+g = nx.Graph()
 
 for d in data:
     left, right = d.split(")")
     g.add_edge(right, left)
 
-sink = "COM"
-source_nodes = [node for node, indegree in g.in_degree(g.nodes()) if indegree == 0]
-print(source_nodes)
-from itertools import combinations
-
-orbits = set()
-
-for node in source_nodes:
-    path_to_home = next(nx.all_simple_paths(g, node, "COM"))
-    for c in combinations(path_to_home, 2):
-        orbits.add(c)
+sink = "SAN"
+source = "YOU"
+# source_nodes = [node for node, indegree in g.in_degree(g.nodes()) if indegree == 0]
+# print(source_nodes)
+# from itertools import combinations
 
 
-print(len(orbits))
+path_to_home = nx.shortest_path(g, source, sink)
+print(path_to_home)
+
+
+print(len(path_to_home) - 3)
